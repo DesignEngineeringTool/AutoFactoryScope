@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BD2D806A-9251-4DED-AC3E-4A402D8FA500}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFactoryScope.Core", "src\AutoFactoryScope.Core\AutoFactoryScope.Core.csproj", "{FBA2209F-BA5F-4A9C-9528-E477072761DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFactoryScope.ML", "src\AutoFactoryScope.ML\AutoFactoryScope.ML.csproj", "{67D76D55-94B9-4305-B8DC-F4E8708242AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFactoryScope.ImageProcessing", "src\AutoFactoryScope.ImageProcessing\AutoFactoryScope.ImageProcessing.csproj", "{A16AC686-93D5-4617-A7B2-63CB188F8BD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFactoryScope.CLI", "src\AutoFactoryScope.CLI\AutoFactoryScope.CLI.csproj", "{08B6F2DA-40F1-4892-B494-04104A539CB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FF9BF78C-AEBF-4EC0-BDE8-7724770ED9C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFactoryScope.Core.Tests", "tests\AutoFactoryScope.Core.Tests\AutoFactoryScope.Core.Tests.csproj", "{0DE5F1E7-A1E7-44B7-87CA-0B4D5B08B4C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBA2209F-BA5F-4A9C-9528-E477072761DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBA2209F-BA5F-4A9C-9528-E477072761DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBA2209F-BA5F-4A9C-9528-E477072761DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBA2209F-BA5F-4A9C-9528-E477072761DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67D76D55-94B9-4305-B8DC-F4E8708242AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D76D55-94B9-4305-B8DC-F4E8708242AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67D76D55-94B9-4305-B8DC-F4E8708242AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67D76D55-94B9-4305-B8DC-F4E8708242AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A16AC686-93D5-4617-A7B2-63CB188F8BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A16AC686-93D5-4617-A7B2-63CB188F8BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16AC686-93D5-4617-A7B2-63CB188F8BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A16AC686-93D5-4617-A7B2-63CB188F8BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08B6F2DA-40F1-4892-B494-04104A539CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08B6F2DA-40F1-4892-B494-04104A539CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08B6F2DA-40F1-4892-B494-04104A539CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08B6F2DA-40F1-4892-B494-04104A539CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DE5F1E7-A1E7-44B7-87CA-0B4D5B08B4C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DE5F1E7-A1E7-44B7-87CA-0B4D5B08B4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DE5F1E7-A1E7-44B7-87CA-0B4D5B08B4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DE5F1E7-A1E7-44B7-87CA-0B4D5B08B4C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FBA2209F-BA5F-4A9C-9528-E477072761DD} = {BD2D806A-9251-4DED-AC3E-4A402D8FA500}
+		{67D76D55-94B9-4305-B8DC-F4E8708242AA} = {BD2D806A-9251-4DED-AC3E-4A402D8FA500}
+		{A16AC686-93D5-4617-A7B2-63CB188F8BD4} = {BD2D806A-9251-4DED-AC3E-4A402D8FA500}
+		{08B6F2DA-40F1-4892-B494-04104A539CB9} = {BD2D806A-9251-4DED-AC3E-4A402D8FA500}
+		{0DE5F1E7-A1E7-44B7-87CA-0B4D5B08B4C1} = {FF9BF78C-AEBF-4EC0-BDE8-7724770ED9C8}
+	EndGlobalSection
+EndGlobal
