@@ -416,3 +416,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# AutoFactoryScope data and models (exclude from git)
+data/
+models/
+!data/**/.gitkeep
+!models/**/.gitkeep
