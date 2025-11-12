@@ -419,6 +419,6 @@ FodyWeavers.xsd
 
 # AutoFactoryScope data and models (exclude from git)
 data/
-models/
+/models/
 !data/**/.gitkeep
-!models/**/.gitkeep
+!/models/**/.gitkeep
