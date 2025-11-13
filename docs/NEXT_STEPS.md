@@ -1,11 +1,24 @@
 # Next Steps for Developers
 
+## 🎯 Project Goal
+
+**Primary Objective:** Count the number of robots in factory floor layout images.
+
+**Current Focus:** Robot detection and counting on floor layouts (1,824 images)
+
+**Future Expansion:**
+- Gantry detection and counting
+- 7th tracks with robots detection and counting
+
+---
+
 ## ✅ What's Ready
 
 ### Dataset
 - **1,824 processed PNG images** in `data/processed/RobotFloor/`
 - **206 MB total** - compressed, rotated, black background
 - **Ready for training** - no further processing needed
+- **Purpose:** Train model to detect and count robots on factory floors
 
 ### Scripts
 - ✅ Complete image processing pipeline
@@ -38,6 +51,8 @@ Copy-Item "data\processed\RobotFloor\*" "data\test\images\" -Skip 1642
 
 ### 2. Annotate Images (Most Time-Consuming)
 
+**Goal:** Draw bounding boxes around EVERY robot in each image. The model will count these boxes to determine robot count.
+
 **Install LabelImg:**
 ```bash
 pip install labelImg
@@ -47,8 +62,9 @@ labelImg
 **Process:**
 1. Open each image in LabelImg
 2. Set format to **YOLO** (not PascalVOC)
-3. Draw bounding boxes around robots
-4. Save - creates `.txt` file automatically
+3. Draw bounding boxes around **ALL robots** in the image
+4. **Important:** Each robot = one box. Count = number of boxes detected
+5. Save - creates `.txt` file automatically
 5. Place `.txt` files in corresponding `labels/` folders
 
 **YOLO Format:** `class_id center_x center_y width height` (all normalized 0-1)
@@ -157,11 +173,12 @@ pwsh scripts/complete-pipeline.ps1
 ## 🎯 Success Criteria
 
 - [ ] Dataset split into train/val/test
-- [ ] All images annotated (`.txt` files created)
+- [ ] All images annotated (`.txt` files created) - **Every robot must be boxed**
 - [ ] `dataset.yaml` configured
 - [ ] YOLO model trained (mAP > 0.7)
 - [ ] ONNX model exported and tested
 - [ ] Model works in C# application
+- [ ] **Robot counting is accurate** - Model correctly counts robots in test images
 
 ---
 

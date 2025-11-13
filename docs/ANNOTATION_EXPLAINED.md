@@ -2,9 +2,11 @@
 
 ## Simple Explanation
 
-**Annotation** = **Labeling objects in images** so the AI can learn what to detect.
+**Annotation** = **Labeling objects in images** so the AI can learn what to detect and count.
 
 Think of it like teaching a child: You show them a picture and say "this is a robot" by drawing a box around it. The AI needs the same thing - you draw boxes around robots in your images and tell it "this is a robot."
+
+**For Counting:** Each box = one robot. The model counts boxes to determine robot count.
 
 ---
 
