@@ -1,0 +1,58 @@
+# Dataset Configuration for YOLO Training
+# ==========================================
+# This file tells YOLO where to find your images and labels
+# 
+# Path structure:
+# - All paths are relative to this file's location
+# - Images go in: data/training/images/, data/validation/images/, etc.
+# - Labels go in: data/training/labels/, data/validation/labels/, etc.
+# - Image and label files must have matching names (except extension)
+
+# Root directory of your dataset
+# Change this if your data folder is in a different location
+path: ./data
+
+# Training images (relative to 'path')
+# YOLO will look for images here
+train: training/images
+
+# Validation images (relative to 'path')
+# YOLO uses these to check how well the model is learning
+val: validation/images
+
+# Test images (optional, relative to 'path')
+# Used for final evaluation after training
+test: test/images
+
+# Number of classes
+# Currently: 1 class (robot)
+# Future: Add more classes (gantry, tracks, etc.)
+nc: 1
+
+# Class names
+# Maps class ID to class name
+# Class 0 = robot
+# Future: Add more classes
+#   1: gantry
+#   2: robot_on_track
+names:
+  0: robot
+
+# ============================================================================
+# How to use this file:
+# ============================================================================
+# 1. Place this file in your project root (same folder as train_robot_model.py)
+# 2. Make sure your directory structure matches:
+#    data/
+#    ├── training/
+#    │   ├── images/  (PNG files)
+#    │   └── labels/ (TXT files)
+#    ├── validation/
+#    │   ├── images/
+#    │   └── labels/
+#    └── test/
+#        ├── images/
+#        └── labels/
+# 3. Run: python train_robot_model.py
+# ============================================================================
+
