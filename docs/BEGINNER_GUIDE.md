@@ -26,6 +26,32 @@ Before starting, make sure you have:
 
 ## 🗺️ Complete Pipeline Overview
 
+### Smart Workflow (If You Have 36 Originals)
+
+```
+Step 1: Annotate 36 Originals  (2-4 hours) ← Only annotate originals!
+   ↓
+Step 2: Transform for Rotations (5 minutes, automatic)
+   ↓
+Step 3: Copy for Black BG     (2 minutes, automatic)
+   ↓
+Step 4: Merge Annotations     (2 minutes, automatic)
+   ↓
+Step 5: Verify Annotations   (5 minutes)
+   ↓
+Step 6: Split Dataset         (5 minutes)
+   ↓
+Step 7: Train Model           (1-4 hours)
+   ↓
+Step 8: Export to ONNX        (1 minute)
+   ↓
+Step 9: Test in C#            (5 minutes)
+```
+
+**Total Time:** ~4-10 hours (vs 20-30 hours manual!)
+
+### Standard Workflow (If Not Using Smart Method)
+
 ```
 Step 1: Split Dataset          (5 minutes)
    ↓
@@ -87,7 +113,23 @@ Split plan:
 
 ---
 
-## Step 2: Annotate Images (10-20 hours)
+## Step 2: Annotate Images
+
+### ⚡ Smart Workflow (Recommended - Saves 16-26 Hours!)
+
+**If you have 36 original images that were rotated to create 912 images:**
+
+1. **Annotate only the 36 originals** (2-4 hours)
+2. **Transform annotations for rotations** (5 min, automatic)
+3. **Copy annotations for black background** (2 min, automatic)
+
+**Total time: 2-4 hours** (vs 20-30 hours manual!)
+
+**See:** `docs/SMART_ANNOTATION_WORKFLOW.md` for complete instructions.
+
+---
+
+### Standard Workflow (If Not Using Smart Method)
 
 ### What This Does
 
