@@ -14,6 +14,15 @@ public sealed class RobotPredictor
     ITransformer? _model;
     PredictionEngine<ModelInput, ModelOutput>? _engine;
 
+    // Class name mapping: Maps class ID (from ONNX) to class name
+    // Update this when adding new classes to your model
+    static readonly Dictionary<long, string> ClassNames = new()
+    {
+        { 0, "robot" },
+        { 1, "gantry" },
+        { 2, "robot_on_track" }
+    };
+
     public RobotPredictor(string onnxModelPath, float confidence = 0.5f, float iou = 0.4f)
     {
         _onnxPath = onnxModelPath ?? throw new ArgumentNullException(nameof(onnxModelPath));
@@ -54,11 +63,16 @@ public sealed class RobotPredictor
             var x = Math.Max(0, cx - w / 2);
             var y = Math.Max(0, cy - h / 2);
 
+            // Get class ID from model output (default to 0 if labels not available)
+            var classId = output.Labels?[i] ?? 0;
+            var className = GetClassName(classId);
+            var robotType = MapToRobotType(className);
+
             dets.Add(new RobotInstance
             {
                 Confidence = s,
-                Label = "Robot",
-                Type = RobotType.Articulated,
+                Label = className,
+                Type = robotType,
                 Box = new BoundingBox { X = x, Y = y, Width = w, Height = h }
             });
         }
@@ -73,6 +87,30 @@ public sealed class RobotPredictor
 
         result.Robots.AddRange(keep);
         return result;
+    }
+
+    /// <summary>
+    /// Maps class ID from ONNX model to class name.
+    /// Class IDs must match your dataset.yaml configuration.
+    /// </summary>
+    static string GetClassName(long classId)
+    {
+        return ClassNames.TryGetValue(classId, out var name) ? name : "unknown";
+    }
+
+    /// <summary>
+    /// Maps class name to RobotType enum.
+    /// Update this when adding new object types.
+    /// </summary>
+    static RobotType MapToRobotType(string className)
+    {
+        return className.ToLower() switch
+        {
+            "robot" => RobotType.Articulated,
+            "gantry" => RobotType.Gantry,
+            "robot_on_track" => RobotType.Mobile,
+            _ => RobotType.Unknown
+        };
     }
 }
 
