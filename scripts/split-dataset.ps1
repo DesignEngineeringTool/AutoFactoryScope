@@ -4,9 +4,13 @@
 
 param(
     [string]$SourceDir = "data/processed/RobotFloor",
+    [string]$SourceLabelsDir = "data/processed/RobotFloor/labels",
     [string]$TrainingDir = "data/training/images",
+    [string]$TrainingLabelsDir = "data/training/labels",
     [string]$ValidationDir = "data/validation/images",
+    [string]$ValidationLabelsDir = "data/validation/labels",
     [string]$TestDir = "data/test/images",
+    [string]$TestLabelsDir = "data/test/labels",
     [double]$TrainingPercent = 0.70,  # 70% for training
     [double]$ValidationPercent = 0.20,  # 20% for validation
     [double]$TestPercent = 0.10         # 10% for test
@@ -53,17 +57,43 @@ Write-Host "Creating output directories..." -ForegroundColor Cyan
 New-Item -ItemType Directory -Force -Path $TrainingDir | Out-Null
 New-Item -ItemType Directory -Force -Path $ValidationDir | Out-Null
 New-Item -ItemType Directory -Force -Path $TestDir | Out-Null
+New-Item -ItemType Directory -Force -Path $TrainingLabelsDir | Out-Null
+New-Item -ItemType Directory -Force -Path $ValidationLabelsDir | Out-Null
+New-Item -ItemType Directory -Force -Path $TestLabelsDir | Out-Null
 Write-Host "  Created: $TrainingDir" -ForegroundColor Green
 Write-Host "  Created: $ValidationDir" -ForegroundColor Green
 Write-Host "  Created: $TestDir" -ForegroundColor Green
+Write-Host "  Created: $TrainingLabelsDir" -ForegroundColor Green
+Write-Host "  Created: $ValidationLabelsDir" -ForegroundColor Green
+Write-Host "  Created: $TestLabelsDir" -ForegroundColor Green
 Write-Host ""
 
-# Copy images to training set
+# Check if labels exist
+$hasLabels = (Test-Path $SourceLabelsDir) -and ((Get-ChildItem -Path $SourceLabelsDir -Filter "*.txt" -File -ErrorAction SilentlyContinue).Count -gt 0)
+
+if ($hasLabels) {
+    Write-Host "Found labels directory, will copy annotations too" -ForegroundColor Green
+    Write-Host ""
+}
+
+# Copy images and labels to training set
 Write-Host "Copying training images..." -ForegroundColor Cyan
 $copied = 0
 for ($i = 0; $i -lt $trainCount; $i++) {
-    $destPath = Join-Path $TrainingDir $images[$i].Name
-    Copy-Item -Path $images[$i].FullName -Destination $destPath -Force
+    $img = $images[$i]
+    $destImgPath = Join-Path $TrainingDir $img.Name
+    Copy-Item -Path $img.FullName -Destination $destImgPath -Force
+    
+    # Copy corresponding label if it exists
+    if ($hasLabels) {
+        $labelName = $img.Name -replace '\.png$', '.txt'
+        $sourceLabelPath = Join-Path $SourceLabelsDir $labelName
+        if (Test-Path $sourceLabelPath) {
+            $destLabelPath = Join-Path $TrainingLabelsDir $labelName
+            Copy-Item -Path $sourceLabelPath -Destination $destLabelPath -Force
+        }
+    }
+    
     $copied++
     if ($copied % 100 -eq 0) {
         Write-Host "  Copied $copied/$trainCount..." -ForegroundColor Gray
@@ -71,12 +101,24 @@ for ($i = 0; $i -lt $trainCount; $i++) {
 }
 Write-Host "  Training: $copied images copied" -ForegroundColor Green
 
-# Copy images to validation set
+# Copy images and labels to validation set
 Write-Host "Copying validation images..." -ForegroundColor Cyan
 $copied = 0
 for ($i = $trainCount; $i -lt ($trainCount + $valCount); $i++) {
-    $destPath = Join-Path $ValidationDir $images[$i].Name
-    Copy-Item -Path $images[$i].FullName -Destination $destPath -Force
+    $img = $images[$i]
+    $destImgPath = Join-Path $ValidationDir $img.Name
+    Copy-Item -Path $img.FullName -Destination $destImgPath -Force
+    
+    # Copy corresponding label if it exists
+    if ($hasLabels) {
+        $labelName = $img.Name -replace '\.png$', '.txt'
+        $sourceLabelPath = Join-Path $SourceLabelsDir $labelName
+        if (Test-Path $sourceLabelPath) {
+            $destLabelPath = Join-Path $ValidationLabelsDir $labelName
+            Copy-Item -Path $sourceLabelPath -Destination $destLabelPath -Force
+        }
+    }
+    
     $copied++
     if ($copied % 50 -eq 0) {
         Write-Host "  Copied $copied/$valCount..." -ForegroundColor Gray
@@ -84,12 +126,24 @@ for ($i = $trainCount; $i -lt ($trainCount + $valCount); $i++) {
 }
 Write-Host "  Validation: $copied images copied" -ForegroundColor Green
 
-# Copy images to test set
+# Copy images and labels to test set
 Write-Host "Copying test images..." -ForegroundColor Cyan
 $copied = 0
 for ($i = ($trainCount + $valCount); $i -lt $total; $i++) {
-    $destPath = Join-Path $TestDir $images[$i].Name
-    Copy-Item -Path $images[$i].FullName -Destination $destPath -Force
+    $img = $images[$i]
+    $destImgPath = Join-Path $TestDir $img.Name
+    Copy-Item -Path $img.FullName -Destination $destImgPath -Force
+    
+    # Copy corresponding label if it exists
+    if ($hasLabels) {
+        $labelName = $img.Name -replace '\.png$', '.txt'
+        $sourceLabelPath = Join-Path $SourceLabelsDir $labelName
+        if (Test-Path $sourceLabelPath) {
+            $destLabelPath = Join-Path $TestLabelsDir $labelName
+            Copy-Item -Path $sourceLabelPath -Destination $destLabelPath -Force
+        }
+    }
+    
     $copied++
     if ($copied % 20 -eq 0) {
         Write-Host "  Copied $copied/$testCount..." -ForegroundColor Gray
@@ -113,8 +167,23 @@ Write-Host ""
 if (($trainActual + $valActual + $testActual) -eq $total) {
     Write-Host "✅ Dataset split completed successfully!" -ForegroundColor Green
     Write-Host ""
-    Write-Host "Next step: Annotate images in data/training/images/" -ForegroundColor Cyan
-    Write-Host "See docs/BEGINNER_GUIDE.md for annotation instructions" -ForegroundColor Yellow
+    
+    if ($hasLabels) {
+        $trainLabels = (Get-ChildItem -Path $TrainingLabelsDir -Filter "*.txt" -File -ErrorAction SilentlyContinue).Count
+        $valLabels = (Get-ChildItem -Path $ValidationLabelsDir -Filter "*.txt" -File -ErrorAction SilentlyContinue).Count
+        $testLabels = (Get-ChildItem -Path $TestLabelsDir -Filter "*.txt" -File -ErrorAction SilentlyContinue).Count
+        
+        Write-Host "Labels copied:" -ForegroundColor Cyan
+        Write-Host "  Training labels:   $trainLabels" -ForegroundColor $(if ($trainLabels -eq $trainCount) { "Green" } else { "Yellow" })
+        Write-Host "  Validation labels: $valLabels" -ForegroundColor $(if ($valLabels -eq $valCount) { "Green" } else { "Yellow" })
+        Write-Host "  Test labels:       $testLabels" -ForegroundColor $(if ($testLabels -eq $testCount) { "Green" } else { "Yellow" })
+        Write-Host ""
+        Write-Host "Next step: Train the model" -ForegroundColor Cyan
+        Write-Host "  python train_robot_model.py" -ForegroundColor Yellow
+    } else {
+        Write-Host "Next step: Annotate images in data/training/images/" -ForegroundColor Cyan
+        Write-Host "See docs/BEGINNER_GUIDE.md for annotation instructions" -ForegroundColor Yellow
+    }
 } else {
     Write-Warning "Some images may be missing. Please check the directories."
 }
