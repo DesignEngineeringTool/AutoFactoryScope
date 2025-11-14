@@ -183,3 +183,5 @@ Write-Host ""
 Write-Host "Done! Images compressed successfully." -ForegroundColor Green
 
 
+
+
