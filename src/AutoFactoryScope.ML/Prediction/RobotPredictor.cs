@@ -37,7 +37,8 @@ public sealed class RobotPredictor : IDisposable
         _session?.Dispose();
         var options = new SessionOptions();
         options.AppendExecutionProvider_CPU();
-        _session = new InferenceSession(File.ReadAllBytes(_onnxPath), options);
+        // Use file path directly instead of reading bytes - more reliable
+        _session = new InferenceSession(_onnxPath, options);
     }
 
     public DetectionResult Predict(byte[] rgbBytes, int imageSize, string imagePath)
