@@ -33,12 +33,31 @@ public sealed class RobotPredictor : IDisposable
 
     void Load()
     {
-        if (File.Exists(_onnxPath) is false) throw new FileNotFoundException(_onnxPath);
+        if (File.Exists(_onnxPath) is false) 
+            throw new FileNotFoundException($"ONNX model file not found: {_onnxPath}");
+        
+        // Check file size - empty or very small files are likely invalid
+        var fileInfo = new FileInfo(_onnxPath);
+        if (fileInfo.Length < 1024) // Less than 1KB is suspicious
+            throw new InvalidOperationException($"ONNX model file appears to be invalid or corrupted: {_onnxPath} (size: {fileInfo.Length} bytes). Expected file: models/onnx/robot_detection.onnx");
+        
         _session?.Dispose();
         var options = new SessionOptions();
         options.AppendExecutionProvider_CPU();
-        // Use file path directly instead of reading bytes - more reliable
-        _session = new InferenceSession(_onnxPath, options);
+        
+        try
+        {
+            // Use file path directly instead of reading bytes - more reliable
+            _session = new InferenceSession(_onnxPath, options);
+        }
+        catch (OnnxRuntimeException ex) when (ex.Message.Contains("does not have a graph") || ex.Message.Contains("ModelProto"))
+        {
+            throw new InvalidOperationException(
+                $"Invalid or corrupted ONNX model file: {_onnxPath}\n" +
+                $"The file exists but is not a valid ONNX model.\n" +
+                $"Please use: models/onnx/robot_detection.onnx\n" +
+                $"Original error: {ex.Message}", ex);
+        }
     }
 
     public DetectionResult Predict(byte[] rgbBytes, int imageSize, string imagePath)
