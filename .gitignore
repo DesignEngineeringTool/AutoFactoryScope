@@ -422,3 +422,9 @@ data/
 /models/
 !data/**/.gitkeep
 !/models/**/.gitkeep
+
+# YOLO training outputs
+runs/
+*.pt
+yolo*.pt
+yolov*.pt
