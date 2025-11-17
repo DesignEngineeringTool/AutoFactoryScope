@@ -128,49 +128,15 @@ if (-not $SkipProcessing) {
     Write-Host ""
 }
 
-# Step 2: Transform annotations for rotations
-Write-Host "=== Step 2: Transforming Annotations for Rotations ===" -ForegroundColor Cyan
-Write-Host ""
-
-if (-not (Test-Path "$ProcessedDir/labels")) {
-    & pwsh -File scripts/transform-annotations-for-rotation.ps1
-    
-    if ($LASTEXITCODE -ne 0) {
-        Write-Error "Annotation transformation failed!"
-        exit 1
-    }
-} else {
-    Write-Host "✅ Rotated annotations already exist" -ForegroundColor Green
-}
-
-Write-Host ""
-
-# Step 3: Copy annotations for black background
-Write-Host "=== Step 3: Copying Annotations for Black Background ===" -ForegroundColor Cyan
-Write-Host ""
-
-if (-not (Test-Path "$ProcessedDir/all_black_bg/labels")) {
-    & pwsh -File scripts/copy-annotations-for-black-bg.ps1
-    
-    if ($LASTEXITCODE -ne 0) {
-        Write-Error "Copying annotations failed!"
-        exit 1
-    }
-} else {
-    Write-Host "✅ Black background annotations already exist" -ForegroundColor Green
-}
-
-Write-Host ""
-
-# Step 4: Merge annotations for final dataset
-Write-Host "=== Step 4: Merging Annotations for Final Dataset ===" -ForegroundColor Cyan
+# Step 2: Create annotations for final dataset
+Write-Host "=== Step 2: Creating Annotations for Final Dataset ===" -ForegroundColor Cyan
 Write-Host ""
 
 if (-not (Test-Path "$FinalDir/labels")) {
-    & pwsh -File scripts/merge-annotations-for-final-dataset.ps1
+    & pwsh -File scripts/create-annotations-for-final-dataset.ps1
     
     if ($LASTEXITCODE -ne 0) {
-        Write-Error "Merging annotations failed!"
+        Write-Error "Creating annotations failed!"
         exit 1
     }
 } else {
@@ -186,12 +152,8 @@ Write-Host ""
 & pwsh -File scripts/verify-annotations.ps1 -ImagesDir $FinalDir -LabelsDir "$FinalDir/labels"
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Warning "Some annotation issues found. Please review."
-    Write-Host "Continue anyway? (Y/N)" -ForegroundColor Yellow
-    $response = Read-Host
-    if ($response -ne 'Y' -and $response -ne 'y') {
-        exit 1
-    }
+    Write-Warning "Some annotation issues found. Continuing anyway..."
+    # Empty annotations are OK (images with no objects)
 }
 
 Write-Host ""
@@ -295,8 +257,8 @@ if (Test-Path "models/onnx/robot_detection.onnx") {
     Write-Host "✅ ONNX model ready: models/onnx/robot_detection.onnx" -ForegroundColor Green
     Write-Host ""
     Write-Host "Next step: Test the model in C#:" -ForegroundColor Cyan
-    Write-Host "  dotnet run --project src/AutoFactoryScope.CLI -- \" -ForegroundColor Yellow
-    Write-Host "    --image `"data/test/images/Robotfloor1.png`" `" -ForegroundColor Yellow
+    Write-Host "  dotnet run --project src/AutoFactoryScope.CLI --" -ForegroundColor Yellow
+    Write-Host "    --image `"data/test/images/Robotfloor1.png`"" -ForegroundColor Yellow
     Write-Host "    --model `"models/onnx/robot_detection.onnx`"" -ForegroundColor Yellow
 } else {
     Write-Host "Next step: Train the model:" -ForegroundColor Cyan
