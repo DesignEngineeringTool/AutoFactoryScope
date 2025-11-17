@@ -419,9 +419,9 @@ FodyWeavers.xsd
 
 # AutoFactoryScope data and models (exclude from git)
 data/
-models/
 !data/**/.gitkeep
-# Allow ONNX models to be committed
+models/*
+!models/.gitkeep
 !models/onnx/
 !models/onnx/*.onnx
 

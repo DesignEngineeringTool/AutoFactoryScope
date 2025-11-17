@@ -4,14 +4,14 @@ namespace AutoFactoryScope.ML.Models;
 
 public sealed class ModelInput
 {
-    [ColumnName("images")] public byte[]? Image { get; init; }
+    [ColumnName("images")] public float[]? Image { get; init; }
 }
 
 public sealed class ModelOutput
 {
-    [ColumnName("boxes")] public float[]? Boxes { get; init; }
-    [ColumnName("scores")] public float[]? Scores { get; init; }
-    [ColumnName("labels")] public long[]? Labels { get; init; }
+    [ColumnName("output0")]
+    [VectorType(300, 6)]
+    public float[]? Detections { get; init; }
 }
 
 
