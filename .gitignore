@@ -422,6 +422,8 @@ data/
 /models/
 !data/**/.gitkeep
 !/models/**/.gitkeep
+# Allow ONNX models to be committed
+!models/onnx/*.onnx
 
 # YOLO training outputs
 runs/
