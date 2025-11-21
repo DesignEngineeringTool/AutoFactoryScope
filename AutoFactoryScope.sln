@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoFactoryScope.Core.Tests", "tests\AutoFactoryScope.Core.Tests\AutoFactoryScope.Core.Tests.csproj", "{4C9DD147-9CF6-4262-BEE1-7DF889B71342}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageClassifier", "ImageClassifier\ImageClassifier.csproj", "{148E210A-6560-4019-A671-6FEFA9EC4C9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,18 @@ Global
 		{4C9DD147-9CF6-4262-BEE1-7DF889B71342}.Release|x64.Build.0 = Release|Any CPU
 		{4C9DD147-9CF6-4262-BEE1-7DF889B71342}.Release|x86.ActiveCfg = Release|Any CPU
 		{4C9DD147-9CF6-4262-BEE1-7DF889B71342}.Release|x86.Build.0 = Release|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Debug|x64.Build.0 = Debug|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Debug|x86.Build.0 = Debug|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Release|x64.ActiveCfg = Release|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Release|x64.Build.0 = Release|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Release|x86.ActiveCfg = Release|Any CPU
+		{148E210A-6560-4019-A671-6FEFA9EC4C9D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,5 +111,8 @@ Global
 		{D72ADE46-6114-4690-9E22-975D41F69260} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{91AA004C-B897-45ED-A60F-4F165721E677} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{4C9DD147-9CF6-4262-BEE1-7DF889B71342} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7480C5FA-E0FD-41B1-B00C-2D8071A6F400}
 	EndGlobalSection
 EndGlobal

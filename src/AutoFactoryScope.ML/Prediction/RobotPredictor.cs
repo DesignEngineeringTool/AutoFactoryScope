@@ -65,8 +65,8 @@ public sealed class RobotPredictor : IDisposable
         if (rgbBytes is null || rgbBytes.Length is 0) throw new ArgumentException("image bytes required");
         if (_session is null) throw new InvalidOperationException("Model not loaded");
         var input = ToOnnxInput(rgbBytes, imageSize);
-        var tensor = new DenseTensor<float>(input, new[] { 1, 3, imageSize, imageSize });
-        using var results = _session.Run(new[] { NamedOnnxValue.CreateFromTensor("images", tensor) });
+        var tensor = new DenseTensor<float>(input, new[] { 1, 3, imageSize, imageSize });      
+        using var results = _session.Run(new[] { NamedOnnxValue.CreateFromTensor("images", tensor) }); 
         var detections = results.First().AsEnumerable<float>().ToArray();
         var result = new DetectionResult { ImagePath = imagePath };
         if (detections.Length == 0) return result;
@@ -79,7 +79,7 @@ public sealed class RobotPredictor : IDisposable
             var y1 = detections[i + 1];
             var x2 = detections[i + 2];
             var y2 = detections[i + 3];
-            var score = detections[i + 4];
+            var score = detections[i + 4];           
             if (score < _conf) continue;
             var classId = (long)Math.Round(detections[i + 5]);
             var className = GetClassName(classId);

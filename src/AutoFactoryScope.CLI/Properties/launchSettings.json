@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AutoFactoryScope.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "--image \"C:\\Users\\Rinesh.Sewpal\\Source\\Repos\\AutoFactoryScope\\data\\test\\images\\Test1.JPG\" `\r\n  --model \"C:\\Users\\Rinesh.Sewpal\\Source\\Repos\\AutoFactoryScope\\models\\onnx\\best.onnx\""
+    }
+  }
+}
